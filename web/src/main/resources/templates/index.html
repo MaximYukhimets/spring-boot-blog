@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+
+        <div th:replace="/fragments/head :: head"/>
+        <script type="text/javascript" th:src="@{/js/likeScript.js}" ></script>
+        <title>My Blog</title>
+
+    </head>
+    <body>
+
+        <div th:insert="/fragments/header :: header"/>
+
+        <div class="container">
+
+            <div th:replace="/fragments/posts :: posts"/>
+
+            <div th:replace="/fragments/pager :: pager(URLparameter='/')"/>
+
+        </div>
+
+        <div th:replace="/fragments/footer :: footer"/>
+
+    </body>
+</html>

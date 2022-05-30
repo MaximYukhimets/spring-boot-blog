@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <div th:replace="/fragments/head :: head"/>
+
+    <link rel="stylesheet" th:href="@{/css/post.css}" href="../css/post.css"/>
+    <link rel="stylesheet" th:href="@{/css/comment.css}" href="../css/comment.css"/>
+
+    <script type="text/javascript" th:src="@{/js/likeScript.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/commentScript.js}" ></script>
+
+    <title th:text="'Post - ' + ${post.title.substring(0, 1).toUpperCase() + post.title.substring(1)}">Post</title>
+
+</head>
+<body>
+
+<div th:insert="/fragments/header :: header"/>
+
+<div class="container">
+
+    <div th:replace="/fragments/post :: post"/>
+
+    <div th:replace="/fragments/comments :: comments"/>
+
+</div>
+
+</body>
+</html>

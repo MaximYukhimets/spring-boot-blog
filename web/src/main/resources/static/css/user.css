@@ -1,0 +1,108 @@
+.profile-container {
+    display: flex;
+}
+
+.profile-picture-block{
+    /*border: 1px solid;*/
+    display: inline-block;
+    box-sizing: border-box;
+    width: 30%;
+}
+
+.profile-info-block{
+    /*border: 1px solid;*/
+    display: inline-block;
+    box-sizing: border-box;
+    width: 69%;
+}
+
+.role-badge {
+    text-align: center;
+    margin: 8px 5px 10px 5px;
+}
+
+.upload-file-button {
+    margin-top: 5px;
+    background-color: #E9ECEFFF;
+    border: 1px solid #CED4DAFF;
+    font-size: 15px;
+    border-radius: 0.2rem;
+    font-family: inherit;
+}
+
+.img-thumbnail {
+    display: block;
+    padding: 0.25rem;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    max-width: 70%;
+    height: auto;
+    margin: 0.25rem auto;
+}
+
+.profile-info-unit {
+    text-decoration: underline;
+    font-size: 17px;
+    font-style: italic;
+}
+
+#profile-info-text {
+    text-align: center;
+    text-decoration: underline;
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-style: oblique;
+    margin-left: 45%;
+}
+
+
+.profile-info-row {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+/*.profile-info-block-body {*/
+/*    height: 85%;*/
+/*}*/
+
+.profile-info-block {
+    position: relative;
+}
+
+.profile-info-block-footer {
+    margin-top: 10px;
+    height: 40px;
+}
+
+#profile-info-banned-label {
+    float: right;
+    font-style: italic;
+    font-weight: 550;
+    margin-top: 4px;
+}
+
+.custom-button-purple {
+    color: #B36FF7FF;
+    border-color: #B36FF7FF;
+}
+
+.custom-button-purple:hover {
+    color: white;
+    background-color:#B36FF7FF;
+    border-color: #B36FF7FF;
+}
+
+.custom-button-purple:focus {
+    outline-color: transparent;
+    outline-style:solid;
+    box-shadow: 0 0 0 4px #B36FF7AA;
+    /*transition: 0.2s;*/
+}
+
+.custom-button-purple:active {
+    color: white;
+    background-color:#B36FF7FF;
+    border-color: #B36FF7FF;
+}
+

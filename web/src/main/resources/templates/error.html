@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <div th:replace="/fragments/head :: head"/>
+    <title>Registration</title>
+
+</head>
+<body>
+
+<div th:insert="/fragments/header :: header"/>
+
+<div class="container">
+
+    <div class="alert alert-danger registration-success" role="alert">
+        <h4 class="alert-heading">Error <span th:text="${status}">Status</span>!</h4>
+        <p>When going to <span style="font-weight: 600;">uri</span> :
+            <span th:if="${uri}" th:text="${uri}"></span>
+            <span th:unless="${uri}" th:text="${path}"></span>
+            <br>
+            received <span style="font-weight: 600;">exception</span> :
+            <span th:if="${exception}" th:text="${exception}"></span>
+            <span th:unless="${exception}" th:text="${error}"></span>
+            </p>
+
+        <hr style="margin-bottom: 5px;margin-top: 25px;">
+    </div>
+
+</div>
+
+</body>
+</html>

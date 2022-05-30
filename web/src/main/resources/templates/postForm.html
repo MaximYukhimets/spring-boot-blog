@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+    <head>
+
+        <div th:replace="/fragments/head :: head"/>
+        <title>New Post</title>
+
+    </head>
+<body>
+
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 my_border-bottom">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                <span class="fs-4">My Blog</span>
+            </a>
+
+            <div style="margin-right: 70px">
+                <a th:href="@{/}"><button type="button" class="btn btn-outline-primary" style="margin-right: 5px;">Home</button></a>
+
+                <div class="form-check form-switch" style="display: inline-flex; padding-left: 18px">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">
+                        <span>Most liked</span>
+                    </label>
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                           th:onclick="doChange()" style="margin-left: 15px; margin-top: 0.29em;">
+                </div>
+
+            </div>
+
+            <div sec:authorize="isAuthenticated()">
+                <div style="display: inline; margin-right: 10px"><a th:href="@{'/user/' + ${#authentication.name}}" style="text-decoration: none;" >Hi, <span sec:authentication="name">name</span></a></div>
+                <form th:action="@{/logout}" method="post" style="display: inline">
+                    <button type="submit" class="btn btn-outline-success">Logout</button>
+                </form>
+            </div>
+
+            <div sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}"><button type="button" class="btn btn-outline-info" style="margin-right: 5px;">Login</button></a>
+                <a th:href="@{/registration}"><button type="button" class="btn btn-outline-info">Sign-up</button></a>
+            </div>
+
+        </header>
+
+
+        <div id="form-label" style="color: #38DB7CFF; margin-bottom: 15px">
+            <h2>Post creation</h2>
+        </div>
+
+        <form th:action="@{'/new-post'}" th:object="${post}" method="post" enctype="multipart/form-data">
+
+            <div class="mb-2 form-input">
+                <label for="formFileSm" class="form-label" style="margin-bottom: 2px; margin-left: 5px; font-size: 14px">Select image</label>
+                <input class="form-control form-control-sm" id="formFileSm" type="file" name="file" th:field="*{image}">
+            </div>
+
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+               class="alert alert-danger form-input"></p>
+            <div class="form-floating mt-3 mb-3 form-input">
+                <input type="text" th:field="*{title}" class="form-control"
+                       id="floatingInput_1" name="title" placeholder="title" required="true"/>
+                <label for="floatingInput_1">Title</label>
+            </div>
+
+            <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}"
+               class="alert alert-danger form-input"></p>
+            <div class="form-floating mt-3 mb-3 form-input">
+                <textarea class="form-control" th:field="*{body}" placeholder="Body" id="floatingTextarea" style="height: 150px"></textarea>
+                <label for="floatingTextarea">Text</label>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px">
+                <input type="submit" class="btn btn-success" value="Create Post"/>
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

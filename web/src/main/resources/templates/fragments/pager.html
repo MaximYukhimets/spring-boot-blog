@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <div th:fragment="pager">
+
+        <div class="pager" th:with="baseUrl=${URLparameter}">
+
+            <div th:if="${pager.getTotalPages() > 1}">
+
+                <span th:if="${pager.hasPrevious()}">
+                    <a class="pageLink"
+                       th:href="@{${baseUrl}(page=1)}">&laquo; first</a>
+                    <a class="pageLink"
+                       th:href="@{${baseUrl}(page=${pager.getCurrentPage() - 1})}"> previous</a>
+                </span>
+
+                <span th:text="'Page ' + ${pager.getCurrentPage()} + ' of ' + ${pager.getTotalPages()}"></span>
+
+                <span th:if="${pager.hasNext()}">
+                    <a class="pageLink"
+                       th:href="@{${baseUrl}(page=${pager.getCurrentPage() + 1})}">next</a>
+                    <a class="pageLink"
+                       th:href="@{${baseUrl}(page=${pager.getTotalPages()})}">last &raquo;</a>
+                </span>
+
+            </div>
+
+        </div>
+    </div>
+</html>

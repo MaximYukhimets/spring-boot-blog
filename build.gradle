@@ -1,0 +1,47 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.6.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+group("com.coursework")
+
+wrapper {
+	gradleVersion = "7.4.1"
+	distributionType = Wrapper.DistributionType.ALL
+}
+
+repositories {
+	mavenCentral()
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	group 'com.coursework'
+	version '0.0.1-SNAPSHOT'
+
+//    sourceCompatibility = JavaVersion.VERSION_17
+
+	repositories {
+		mavenCentral()
+	}
+
+//	jar {
+//		enabled = true
+//	}
+}
+
+allprojects {
+	apply plugin: 'checkstyle'
+}
+
+checkstyle {
+	toolVersion = '8.29'
+	//configFile file("config/checkstyle/checkstyle.xml")
+	configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+}
+
+

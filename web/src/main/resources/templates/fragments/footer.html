@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <footer th:fragment="footer">
+
+        <div class="container">
+
+            <hr/>
+
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                <span sec:authorize="isAuthenticated()">
+                    | Logged user: <span sec:authentication="name"></span> |
+                    Roles: <span sec:authentication="principal.authorities"></span> |
+                </span>
+
+                    <div class="footer">
+                        <p>2022 © Maxim Yukhimets</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+</html>

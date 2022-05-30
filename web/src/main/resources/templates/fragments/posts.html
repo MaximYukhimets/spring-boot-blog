@@ -1,0 +1,101 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <div th:fragment="posts">
+
+        <div th:if="${posts.size() == 0}" class="no-content-label">
+            <p>No content yet (╥_╥)</p>
+        </div>
+
+        <div class="panel-container" th:each="post : ${posts}">
+            <div class="panel-heading">
+                <a class="panel-title" th:text="${post.title}" th:href="@{'/post/' + ${post.id}}">post title</a>
+                <div class="panel-author">
+                    author: <a th:text="${post.user.username}" th:href="@{'/user/' + ${post.user.username}}">post author</a>
+                </div>
+                <div class="panel-date" th:text="'Created: ' + ${#temporals.format(post.creationDate, 'dd-MM-yyyy HH:mm')}">
+                    Created by
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <div th:if="${post.body.split(' ').length > 70}">
+                    <span th:text="${reducer.apply(post.body)}">post body</span><a id="three_dot" th:href="@{'/post/' + ${post.id}}"> ...</a>
+                </div>
+                <div th:unless="${post.body.split(' ').length > 70}">
+                    <p th:text="${post.body}">post body</p>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+
+                <a th:href="@{'/post/' + ${post.id}} + '?scroll=bottom'">
+                    <button class="btn btn-outline-primary" style="border: none">
+                        <span th:text="${post.commentCounter}"></span>
+                        <i class="bi bi-chat-text"></i>
+                    </button>
+                </a>
+
+                <div class="panel-footer-like-button">
+
+                    <div sec:authorize="isAuthenticated()">
+                        <div th:if="${post.IsUserAlreadyLikePost}">
+                            <button type="submit" class="btn btn-outline-secondary shadow-none" style="border: none"
+                                    th:id="'like-button-' + ${post.id}"  th:onclick="likeScript('[[(${post.id})]]')">
+
+                                <span th:id="'like-value-' + ${post.id}" th:text="${post.likeCounter}"></span>
+                                <i class="bi-check-circle" th:id="'like-icon-' + ${post.id}"></i>
+
+                            </button>
+                        </div>
+                        <div th:unless="${post.IsUserAlreadyLikePost}">
+                            <button type="submit" class="btn btn-outline-success shadow-none" style="border: none"
+                                    th:id="'like-button-' + ${post.id}"  th:onclick="likeScript('[[(${post.id})]]')">
+
+                                <span th:id="'like-value-' + ${post.id}" th:text="${post.likeCounter}"></span>
+                                <i class="bi bi-hand-thumbs-up" th:id="'like-icon-' + ${post.id}"></i>
+
+                            </button>
+                        </div>
+                    </div>
+
+                    <div sec:authorize="isAnonymous()">
+                        <button type="submit" class="btn btn-outline-success" style="border: none" disabled>
+                            <span th:text="${post.likeCounter}"></span>
+                            <i class="bi bi-hand-thumbs-up"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="panel-footer-delete-button">
+                    <div sec:authorize="isAuthenticated()">
+                        <div th:if="${user == null}">
+                            <div th:if="${#authentication.getPrincipal().getUsername() == post.user.username || #authorization.expression('hasRole(''ADMIN'')') || #authorization.expression('hasRole(''SUPER_ADMIN'')')}">
+                                <form th:method="POST" th:action="@{'/post/' + ${post.id} + '/delete'}">
+                                    <button type="submit" class="btn btn-outline-danger" style="border: none">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div th:unless="${user == null}">
+                            <div th:if="${#authentication.getPrincipal().getUsername() == post.user.username || #authorization.expression('hasRole(''ADMIN'')') || #authorization.expression('hasRole(''SUPER_ADMIN'')')}">
+                                <form th:method="POST" th:action="@{'/post/' + ${post.id} + '/delete?redirectOn=' + ${user.username}}">
+                                    <button type="submit" class="btn btn-outline-danger" style="border: none">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</html>

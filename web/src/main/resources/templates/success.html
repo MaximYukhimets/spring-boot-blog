@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <div th:replace="/fragments/head :: head"/>
+    <title>Registration</title>
+
+</head>
+<body>
+
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 my_border-bottom">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            <span class="fs-4">My Blog</span>
+        </a>
+        <div style="margin-right: 70px">
+            <a th:href="@{/}"><button type="button" class="btn btn-outline-primary" style="margin-right: 5px;">Home</button></a>
+            <a th:href="@{/like}"><button type="button" class="btn btn-outline-success">Most liked</button></a>
+        </div>
+
+        <div>
+            <a th:href="@{/login}"><button type="button" class="btn btn-outline-info" >Login</button></a>
+        </div>
+
+    </header>
+</div>
+
+
+<div class="container">
+
+    <div class="alert alert-success registration-success" role="alert">
+        <h4 class="alert-heading">Registration successful!</h4>
+        <p>User with <span style="font-weight: 600;">username</span> :
+            <span th:text="${user.username}">user</span> and <span style="font-weight: 600;">email</span>
+            : <span th:text="${user.email}">email</span>
+            <br>
+            has been registered successfully</p>
+        <hr style="margin-bottom: 5px;margin-top: 25px;">
+    </div>
+
+</div>
+
+</body>
+</html>

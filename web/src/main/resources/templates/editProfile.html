@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <div th:replace="/fragments/head :: head"/>
+    <title th:text="${user.username.substring(0, 1).toUpperCase() + user.username.substring(1)} + ' profile editing'">My Blog</title>
+
+</head>
+<body>
+
+<div th:insert="/fragments/header :: header"/>
+
+<div class="container">
+
+    <div id="form-label" style="color: #FFC310FF;">
+        <h2>Edit <span th:text="${user.username.substring(0, 1).toUpperCase() + user.username.substring(1)}"></span> Info</h2>
+    </div>
+
+    <form autocomplete="off" action="#" th:action="@{'/user/' + ${user.username} + '/edit'}"
+          th:object="${user}" method="post">
+
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{username}"/>
+
+        <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+           class="alert alert-danger form-input"></p>
+        <div class="form-floating mt-3 mb-3 form-input">
+            <input type="text" th:field="*{firstName}" class="form-control"
+                   id="floatingInput_1" name="firstName" placeholder="firstName" required="true"/>
+            <label for="floatingInput_1">First Name</label>
+        </div>
+
+        <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+           class="alert alert-danger form-input"></p>
+        <div class="form-floating mt-3 mb-3 form-input">
+            <input type="text" th:field="*{lastName}" class="form-control"
+                   id="floatingInput_2" name="lastName" placeholder="lastName" required="true"/>
+            <label for="floatingInput_2">Last Name</label>
+        </div>
+
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+           class="alert alert-danger form-input"></p>
+        <div class="form-floating mt-3 mb-3 form-input">
+            <input type="text" th:field="*{email}" class="form-control"
+                   id="floatingInput_3" name="email" placeholder="Email" required="true"/>
+            <label for="floatingInput_3">Email</label>
+        </div>
+
+        <p th:if="${#fields.hasErrors('about')}" th:errors="*{about}"
+           class="alert alert-danger form-input"></p>
+        <div class="form-floating mt-3 mb-3 form-input">
+            <textarea class="form-control" th:field="*{about}" placeholder="About" id="floatingTextarea" style="height: 100px"></textarea>
+            <label for="floatingTextarea">About me</label>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px">
+            <input type="submit" class="btn btn-success" value="Save Changes"/>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

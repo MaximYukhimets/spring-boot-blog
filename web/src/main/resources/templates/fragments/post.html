@@ -1,0 +1,116 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+
+<div th:fragment="post">
+
+    <div class="post-container">
+
+        <div class="post-header">
+
+            <div class="post-title">
+                <p style="margin-bottom: 3px" th:text="${post.title.substring(0, 1).toUpperCase() + post.title.substring(1)}">Post Title</p>
+            </div>
+            <div class="post-author-data">
+                <span class="panel-author">
+                    by : <a th:text="${post.user.username}" th:href="@{'/user/' + ${post.user.username}}">post author</a>
+                </span>
+                <span class="panel-date" th:text="'posted : ' + ${#temporals.format(post.creationDate, 'dd-MM-yyyy HH:mm')}">
+                    Created by
+                </span>
+            </div>
+
+        </div>
+
+        <div class="post-body">
+
+            <div class="post-picture">
+                <div th:if="${post.image64}">
+                    <div th:if="${isBodyEmpty}" style="text-align: center">
+                        <img th:src="${'data:image/jpeg;charset=utf-8;base64,' + post.image64}" alt="" class="post-img">
+                    </div>
+                    <div th:unless="${isBodyEmpty}">
+                        <img th:src="${'data:image/jpeg;charset=utf-8;base64,' + post.image64}" alt="" class="post-img"
+                             style="margin-right: 8px; float: left;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-content" style="overflow-wrap: anywhere;">
+                <p th:text="${post.body}">post body</p>
+            </div>
+
+        </div>
+
+        <div class="post-footer">
+                <div class="left-buttons">
+
+<!--                    <a th:href="@{'/add-comment/' + ${post.id}}">-->
+                        <button class="btn btn-outline-primary" style="border: none" disabled>
+                            <span data-bind="text: comments().length"></span>
+                            <i class="bi bi-chat-text"></i>
+                        </button>
+<!--                    </a>-->
+
+                    <div class="panel-footer-like-button">
+
+                        <div sec:authorize="isAuthenticated()">
+                            <div th:if="${post.IsUserAlreadyLikePost}">
+                                <button type="submit" class="btn btn-outline-secondary shadow-none" style="border: none"
+                                        th:id="'like-button-' + ${post.id}"  th:onclick="likeScript('[[(${post.id})]]')">
+
+                                    <span th:id="'like-value-' + ${post.id}" th:text="${post.likeCounter}"></span>
+                                    <i class="bi-check-circle" th:id="'like-icon-' + ${post.id}"></i>
+
+                                </button>
+                            </div>
+                            <div th:unless="${post.IsUserAlreadyLikePost}">
+                                <button type="submit" class="btn btn-outline-success shadow-none" style="border: none"
+                                        th:id="'like-button-' + ${post.id}"  th:onclick="likeScript('[[(${post.id})]]')">
+
+                                    <span th:id="'like-value-' + ${post.id}" th:text="${post.likeCounter}"></span>
+                                    <i class="bi bi-hand-thumbs-up" th:id="'like-icon-' + ${post.id}"></i>
+
+                                </button>
+                            </div>
+                        </div>
+
+                        <div sec:authorize="isAnonymous()">
+                            <button type="submit" class="btn btn-outline-success" style="border: none" disabled>
+                                <span th:text="${post.likeCounter}"></span>
+                                <i class="bi bi-hand-thumbs-up"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="right-buttons">
+
+                    <div sec:authorize="isAuthenticated()">
+
+                        <div th:if="${isAuthorUser}" style="display: inline-block; margin-right: 8px">
+                            <a th:href="@{'/post/' + ${post.id} + '/edit'}">
+                                <button type="button" class="btn btn-outline-warning" style="border: none">
+                                    <i class="bi bi-gear"></i>
+                                </button>
+                            </a>
+                        </div>
+
+                        <div th:if="${isAuthorUser || isUserAdminOrSuperAdmin}" style="display: inline-block">
+                            <form th:method="POST" th:action="@{'/post/' + ${post.id} + '/delete'}">
+                                <button type="submit" class="btn btn-outline-danger" style="border: none">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+
+        </div>
+    </div>
+
+</div>
+</html>

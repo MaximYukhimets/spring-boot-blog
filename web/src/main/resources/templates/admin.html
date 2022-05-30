@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+
+        <div th:replace="/fragments/head :: head"/>
+
+        <link rel="stylesheet" th:href="@{/css/admin.css}" href="../css/admin.css"/>
+        <link rel="stylesheet" th:href="@{/css/user.css}" href="../css/user.css"/>
+
+        <script type="text/javascript" th:src="@{/js/adminPanel.js}"></script>
+
+        <title>Admin Panel</title>
+
+    </head>
+    <body>
+
+        <div th:insert="/fragments/header :: header"/>
+
+        <div class="container">
+
+            <div class="post-container">
+
+                <div class="statistics-block">
+
+                    <div class="statistics-block-head">
+                        <span id="statistics-label">Statistics</span>
+                    </div>
+
+                    <div class="statistics-block-body">
+
+                        <div class="community-statistic">
+
+                            <div class="community-statistic-head">
+                                <span id="community-label">Community</span>
+                            </div>
+                            <div class="community-statistic-body">
+                                <ul style="margin-left: 30px">
+                                    <li class="row">Number of admins<span data-bind="text: admins().length"></span></li>
+                                    <li class="row">Number of users<span data-bind="text: users().length"></span></li>
+                                    <li class="row">Banned users<span data-bind="text: bannedUsers().length"></span></li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                        <div class="content-statistic">
+
+                            <div class="content-statistic-head">
+                                <span id="content-label">Content</span>
+                            </div>
+                            <div class="content-statistic-body">
+                                <ul style="margin-left: 30px">
+                                    <li class="row">Number of posts<span data-bind="text: postsNumber"></span></li>
+                                    <li class="row">Number of comments<span data-bind="text: commentsNumber"></span></li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="post-container" style="margin-top: 10px" data-bind="visible: admins().length > 0">
+
+                <div class="admins-list">
+
+                    <div class="admin-list-head">
+                        <span class="list-label">Admins list</span>
+                    </div>
+
+                    <div class="admin-list-body">
+
+                        <table class="table table-hover" >
+                            <thead><tr><th>#</th><th>Img</th><th>Username</th><th>Email</th><th>Registration</th><th>Active</th><th>Roles</th></tr></thead>
+                            <tbody data-bind="foreach: admins">
+                            <tr>
+                                <td data-bind="text: $index() + 1"></td>
+                                <td><img alt="" data-bind="attr: { src: 'data:image/jpeg;charset=utf-8;base64,' + image64 }" class="all-users-list-img"/></td>
+                                <td><a data-bind="attr: { href: '/user/' + username }, text: username"></a></td>
+                                <td data-bind="text: email"></td>
+                                <td data-bind="text: registrationDate.split('T').join().split('.')[0].split(',').join(' ')"></td>
+                                <td data-bind="text: active ? active : 'BANNED'"></td>
+                                <td>
+                                    <div data-bind="foreach: roles">
+                                        <span data-bind="visible: name == 'USER'" class="badge rounded-pill" style="background-color: #4CC869FF;">User</span>
+                                        <span data-bind="visible: name == 'ADMIN'" class="badge rounded-pill" style="background-color: #217CFDFF;">Admin</span>
+                                        <span data-bind="visible: name == 'SUPER_ADMIN'" class="badge rounded-pill" style="background-color: #B36FF7FF;">Super Admin</span>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div data-bind="visible: !$parent.isUserSuperAdmin(roles)">
+                                        <div data-bind="visible: $parent.isCurrentUserSuperAdmin() === 1">
+                                            <button data-bind="click: $parent.declineAdmin" class="btn btn-outline-danger btn-sm shadow-none" style="border: none; margin-top: 5px">
+                                                Decline Admin
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="post-container" style="margin-top: 10px" data-bind="visible: users().length > 0">
+
+                <div class="users-list">
+
+                    <div class="users-list-head">
+                        <span class="list-label">Users list</span>
+                    </div>
+
+                    <div class="users-list-body">
+                        <table class="table table-hover" >
+                            <thead><tr><th>#</th><th>Img</th><th>Username</th><th>Email</th><th>Registration</th><th>Active</th><th>Roles</th></tr></thead>
+                            <tbody data-bind="foreach: users">
+                            <tr>
+                                <td data-bind="text: $index() + 1"></td>
+                                <td><img alt="" data-bind="attr: { src: 'data:image/jpeg;charset=utf-8;base64,' + image64 }" class="all-users-list-img"/></td>
+                                <td><a data-bind="attr: { href: '/user/' + username }, text: username"></a></td>
+                                <td data-bind="text: email"></td>
+                                <td data-bind="text: registrationDate.split('T').join().split('.')[0].split(',').join(' ')"></td>
+                                <td data-bind="text: active ? active : 'BANNED'"></td>
+                                <td>
+                                    <div data-bind="foreach: roles">
+                                        <span data-bind="visible: name == 'USER'" class="badge rounded-pill" style="background-color: #4CC869FF;">User</span>
+                                        <span data-bind="visible: name == 'ADMIN'" class="badge rounded-pill" style="background-color: #217CFDFF;">Admin</span>
+                                        <span data-bind="visible: name == 'SUPER_ADMIN'" class="badge rounded-pill" style="background-color: #B36FF7FF;">Super Admin</span>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div data-bind="visible: !$parent.isUserAdminOrSuperAdmin(roles)">
+                                        <div data-bind="visible: $parent.isCurrentUserSuperAdmin() === 1">
+                                            <button data-bind="click: $parent.makeAdmin" class="btn custom-button-purple btn-sm shadow-none" style="border: none">
+                                                Make Admin
+                                            </button>
+                                        </div>
+
+                                        <button data-bind="click: $parent.banUser" class="btn btn-outline-danger btn-sm shadow-none" style="border: none; margin-top: 5px">
+                                            Ban
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="post-container" style="margin-top: 10px" data-bind="visible: bannedUsers().length>0">
+
+                <div class="banned-user-list">
+
+                    <div class="banned-user-list-head">
+                        <span class="list-label">Banned users list</span>
+                    </div>
+
+                    <div class="banned-user-list-body">
+
+                        <table class="table table-hover" >
+                            <thead><tr><th>#</th><th>Img</th><th>Username</th><th>Email</th><th>Registration</th><th>Active</th><th>Roles</th></tr></thead>
+                            <tbody data-bind="foreach: bannedUsers">
+                            <tr>
+                                <td data-bind="text: $index() + 1"></td>
+                                <td><img alt="" data-bind="attr: { src: 'data:image/jpeg;charset=utf-8;base64,' + image64 }" class="all-users-list-img"/></td>
+                                <td><a data-bind="attr: { href: '/user/' + username }, text: username"></a></td>
+                                <td data-bind="text: email"></td>
+                                <td data-bind="text: registrationDate.split('T').join().split('.')[0].split(',').join(' ')"></td>
+                                <td data-bind="text: active ? active : 'BANNED'"></td>
+                                <td>
+                                    <div data-bind="foreach: roles">
+                                        <span data-bind="visible: name == 'USER'" class="badge rounded-pill" style="background-color: #4CC869FF;">User</span>
+                                        <span data-bind="visible: name == 'ADMIN'" class="badge rounded-pill" style="background-color: #217CFDFF;">Admin</span>
+                                        <span data-bind="visible: name == 'SUPER_ADMIN'" class="badge rounded-pill" style="background-color: #B36FF7FF;">Super Admin</span>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <button data-bind="click: $parent.unbanUser" class="btn btn-outline-info btn-sm shadow-none" style="border: none">
+                                        Unban
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </body>
+</html>

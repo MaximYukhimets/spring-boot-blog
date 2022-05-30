@@ -1,0 +1,40 @@
+plugins {
+    id 'war'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+
+    implementation 'org.hibernate.validator:hibernate-validator:6.2.3.Final'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'junit:junit:4.13.2'
+
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+    implementation project(':domain')
+    implementation project(':persistence')
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+checkstyleMain {
+    source ='src/main/java'
+}
+checkstyleTest {
+    source ='src/test/java'
+}

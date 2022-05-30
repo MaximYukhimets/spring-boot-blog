@@ -1,0 +1,77 @@
+.statistics-block-head {
+    text-align: center;
+}
+
+#statistics-label {
+    font-size: 20px;
+}
+
+.community-statistic {
+    float: left;
+    width: 50%;
+}
+
+.content-statistic {
+    float: right;
+    width: 50%;
+}
+
+.community-statistic-head {
+    text-align: center;
+}
+
+.content-statistic-head {
+    text-align: center;
+}
+
+#content-label {
+    text-decoration: underline;
+}
+
+#community-label {
+    text-decoration: underline;
+}
+
+.row {
+    list-style-type: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.users-list-head {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.list-label {
+    font-size: 17px;
+}
+
+.all-users-list-img {
+    padding: 0.25rem;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 4.25rem;
+    max-width: 50px;
+    height: auto;
+}
+
+.admins-list {
+    overflow: auto;
+}
+
+.users-list {
+    overflow: auto;
+}
+
+.banned-user-list {
+    overflow: auto;
+}
+
+.banned-user-list-head {
+    text-align: center;
+}
+
+.admin-list-head {
+    text-align: center;
+}

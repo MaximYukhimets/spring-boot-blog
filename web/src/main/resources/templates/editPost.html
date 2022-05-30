@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <div th:replace="/fragments/head :: head"/>
+    <link rel="stylesheet" th:href="@{/css/editPost.css}" href="../css/editPost.css"/>
+    <title>Post editing</title>
+
+</head>
+<body>
+
+<div th:insert="/fragments/header :: header"/>
+
+<div class="container">
+
+    <div id="form-label" style="color: #FFC310FF;">
+        <h2>Post editing</h2>
+    </div>
+
+    <div th:if="${post.image64}">
+        <div class="block-container">
+
+            <div class="left-block">
+                <img th:src="${'data:image/jpeg;charset=utf-8;base64,' + post.image64}" alt="" class="block-image">
+            </div>
+
+            <div class="right-block">
+                <form th:action="@{'/post/' + ${post.id} + '/edit'}" th:object="${post}"
+                      method="post" enctype="multipart/form-data">
+
+                    <div class="mb-2">
+                        <label for="formFileSm" class="form-label" style="margin-bottom: 2px; margin-left: 5px; font-size: 14px">Select image</label>
+                        <input class="form-control form-control-sm" id="formFileSm" type="file" name="file" th:field="*{image}">
+                    </div>
+
+                    <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                       class="alert alert-danger"></p>
+                    <div class="form-floating mt-3 mb-3">
+                        <input type="text" th:field="*{title}" class="form-control"
+                               id="floatingInput_1" name="title" placeholder="title" required="true"/>
+                        <label for="floatingInput_1">Title</label>
+                    </div>
+
+                    <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}"
+                       class="alert alert-danger"></p>
+                    <div class="form-floating mt-3 mb-3">
+                        <textarea class="form-control" th:field="*{body}" placeholder="Body" id="floatingTextarea" style="height: 200px"></textarea>
+                        <label for="floatingTextarea">Text</label>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px">
+                        <input type="submit" class="btn btn-success" value="Save Changes"/>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:unless="${post.image64}">
+        <form th:action="@{'/post/' + ${post.id} + '/edit'}" th:object="${post}" method="post" enctype="multipart/form-data">
+
+            <div class="mb-2 form-input">
+                <label for="formFileSm_else" class="form-label" style="margin-bottom: 2px; margin-left: 5px; font-size: 14px">Select image</label>
+                <input class="form-control form-control-sm" id="formFileSm_else" type="file" name="file" th:field="*{image}">
+            </div>
+
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+               class="alert alert-danger form-input"></p>
+            <div class="form-floating mt-3 mb-3 form-input">
+                <input type="text" th:field="*{title}" class="form-control"
+                       id="floatingInput_else" name="title" placeholder="title" required="true"/>
+                <label for="floatingInput_else">Title</label>
+            </div>
+
+            <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}"
+               class="alert alert-danger form-input"></p>
+            <div class="form-floating mt-3 mb-3 form-input">
+                <textarea class="form-control" th:field="*{body}" placeholder="Body" id="floatingTextarea_else" style="height: 200px"></textarea>
+                <label for="floatingTextarea_else">Text</label>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px">
+                <input type="submit" class="btn btn-success" value="Save Changes"/>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

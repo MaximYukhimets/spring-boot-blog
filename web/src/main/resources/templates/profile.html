@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <div th:replace="/fragments/head :: head"/>
+    <link rel="stylesheet" th:href="@{/css/user.css}" href="../css/user.css"/>
+    <title th:text="${user.username.substring(0, 1).toUpperCase() + user.username.substring(1)} + ' profile'">My Blog</title>
+    <script type="text/javascript" th:src="@{/js/likeScript.js}" ></script>
+
+</head>
+<body>
+
+<div th:insert="/fragments/header :: header"/>
+
+<div class="container">
+
+    <div th:replace="/fragments/user :: user"/>
+
+    <div th:replace="/fragments/posts :: posts"/>
+
+    <div th:replace="/fragments/pager :: pager(URLparameter= ${user.getUsername()})"/>
+
+</div>
+
+<div th:replace="/fragments/footer :: footer"/>
+
+</body>
+</html>

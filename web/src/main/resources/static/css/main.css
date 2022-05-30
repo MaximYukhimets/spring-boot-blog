@@ -1,0 +1,149 @@
+.my_border-bottom {
+    border-bottom: 1px solid #CCCCCCFF;
+}
+
+.panel-container {
+    margin: 20px;
+    padding: 15px;
+    border: 1px solid #CCCCCCFF;
+    border-radius: 15px;
+
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+}
+
+.panel-heading {
+    padding: 5px 10px 7px 10px;
+    border-bottom: 1px solid #CCCCCCFF;
+}
+
+.panel-title {
+    margin-bottom: 5px;
+    font-size: 19px;
+}
+
+.panel-author {
+    font-size: 14px;
+    font-style: italic;
+    font-family: unset;
+}
+
+.panel-date {
+    font-size: 14px;
+    font-style: italic;
+    font-family: unset;
+}
+
+.panel-body {
+    margin-top: 10px;
+    margin-bottom: 18px;
+    overflow-wrap: anywhere;
+}
+
+.three_dot {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.login-input {
+    width: 30%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.login-alert {
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#form-label {
+    text-align: center;
+    color: #0dcaf0;
+    margin-bottom: 18px;
+    margin-top: 30px;
+}
+
+.form-input {
+    width: 40%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.registration-success {
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 50px;
+}
+
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+.pager {
+    text-align: center;
+}
+
+.btn-outline-info:hover {
+    color: white;
+}
+
+.btn-outline-info:active {
+    color: white;
+}
+
+.custom-button-light-green {
+    color: #00DB9AFF;
+    border-color: #00DB9AFF;
+}
+
+.custom-button-light-green:hover {
+    color: white;
+    background-color:#00DB9AFF;
+    border-color: #00DB9AFF;
+}
+
+.custom-button-light-green:focus {
+    outline-color: transparent;
+    outline-style:solid;
+    box-shadow: 0 0 0 4px #00DB9AAA;
+    /*transition: 0.2s;*/
+}
+
+.custom-button-light-green:active {
+    color: white;
+    background-color:#00DB9AFF;
+    border-color: #00DB9AFF;
+}
+
+.no-content-label {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.panel-footer-like-button {
+    display: inline-block;
+    margin-left: 3px;
+}
+
+.panel-footer-delete-button {
+    display: inline-block;
+    float: right;
+}
+
+.post-container {
+    display: grid;
+    width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+    /*margin: 20px;*/
+    padding: 15px;
+    border: 1px solid #CCCCCCFF;
+    border-radius: 15px;
+
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+}

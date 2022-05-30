@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <div th:fragment="header">
+        <div class="container">
+            <header class="d-flex flex-wrap justify-content-center py-3 mb-4 my_border-bottom">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                    <span class="fs-4">My Blog</span>
+                </a>
+
+                <div sec:authorize="isAuthenticated()">
+                    <a th:href="@{/new-post}"><button type="button" class="btn custom-button-light-green" style="margin-right: 10px;">New Post</button></a>
+                </div>
+
+                <div style="margin-right: 70px">
+                    <a th:href="@{/}"><button type="button" class="btn btn-outline-primary" style="margin-right: 5px;">Home</button></a>
+
+                    <div class="form-check form-switch" style="display: inline-flex; padding-left: 18px">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">
+                            <span>Most liked</span>
+                        </label>
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                               th:onclick="doChange()" style="margin-left: 15px; margin-top: 0.29em;">
+                    </div>
+
+                </div>
+
+                <div sec:authorize="isAuthenticated()">
+                    <div style="display: inline; margin-right: 10px"><a th:href="@{'/user/' + ${#authentication.name}}" style="text-decoration: none;" >Hi, <span sec:authentication="name">name</span></a></div>
+                    <form th:action="@{/logout}" method="post" style="display: inline">
+                        <button type="submit" class="btn btn-outline-success">Logout</button>
+                    </form>
+                </div>
+
+                <div sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}"><button type="button" class="btn btn-outline-info" style="margin-right: 5px;">Login</button></a>
+                    <a th:href="@{/registration}"><button type="button" class="btn btn-outline-info">Sign-up</button></a>
+                </div>
+
+            </header>
+        </div>
+    </div>
+
+</html>

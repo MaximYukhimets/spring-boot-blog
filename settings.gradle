@@ -1,0 +1,5 @@
+rootProject.name = 'blog'
+include 'persistence'
+include 'domain'
+include 'web'
+

@@ -1,0 +1,155 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+
+<div th:fragment="user">
+    <div class="panel-container">
+
+        <div class="profile-container">
+
+            <div class="profile-picture-block">
+                <div th:if="${user.image64}">
+                    <img th:src="${'data:image/jpeg;charset=utf-8;base64,' + user.image64}" alt="" class="img-thumbnail">
+                </div>
+
+<!--                <span sec:authorize="hasRole('ADMIN') || hasRole('SUPER_ADMIN')"><span/>-->
+                <div class="role-badge">
+                    <span th:each="role : ${user.getRoles()}">
+                        <span th:if="${role.getName == 'USER'}" class="badge rounded-pill" style="background-color: #4CC869FF;">User</span>
+                        <span th:if="${role.getName == 'ADMIN'}" class="badge rounded-pill" style="background-color: #217CFDFF;">Admin</span>
+                        <span th:if="${role.getName == 'SUPER_ADMIN'}" class="badge rounded-pill" style="background-color: #B36FF7FF;">Super Admin</span>
+                    </span>
+                </div>
+
+                <div sec:authorize="isAuthenticated()">
+
+                    <div th:if="${#authentication.getPrincipal().getUsername() == user.username}">
+                        <form th:action="@{'/user/' + ${user.username} + '/upload'}" method="post" enctype="multipart/form-data">
+                            <div class="mb-2" style="width: 80%; margin-left: 20px">
+                                <label for="formFileSm" class="form-label" style="margin-bottom: 2px; margin-left: 5px; font-size: 14px">Select image</label>
+                                <input class="form-control form-control-sm" id="formFileSm" type="file" name="file">
+                                <input type="submit" class="upload-file-button" value="Upload">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="profile-info-block">
+                <div class="profile-info-block-header" style="margin-bottom: 15px">
+                    <span id="profile-info-text">Profile Info</span>
+                    <span id="profile-info-banned-label" th:unless="${user.active}">BANNED</span>
+                </div>
+
+                <div class="profile-info-block-body">
+
+                    <div class="profile-info-row">
+                        <span class="profile-info-unit">Username</span> : <span th:text="${user.username}">username</span>
+                    </div>
+                    <div class="profile-info-row">
+                        <span class="profile-info-unit">First name</span> : <span th:text="${user.firstName}">firstName</span>
+                        <span class="profile-info-unit" style="margin-left: 20px">Last name</span> : <span th:text="${user.lastName}">lastName</span>
+                    </div>
+
+                    <div sec:authorize="isAuthenticated()">
+                        <div th:if="${#authentication.getPrincipal().getUsername() == user.username || #authorization.expression('hasRole(''ADMIN'')') || #authorization.expression('hasRole(''SUPER_ADMIN'')')}">
+                            <div class="profile-info-row">
+                                <span class="profile-info-unit">Email</span> : <span th:text="${user.email}">email</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <span class="profile-info-unit">About</span> : <span th:text="${user.about}">about</span>
+                    </div>
+
+                    <div class="profile-info-row" style="margin-bottom: 0px">
+                        <span class="profile-info-unit">Registration</span> : <span th:text="${#dates.format(user.registrationDate, 'dd-MM-yyyy')}" >date</span>
+                    </div>
+                </div>
+
+
+                <div class="profile-info-block-footer">
+                    <div sec:authorize="isAuthenticated()">
+
+                        <div th:if="${#authorization.expression('hasRole(''SUPER_ADMIN'')')}">
+                            <div th:if="${!isAdminOrSuperAdmin && user.active}">
+                                <div class="position-absolute bottom-0 start-0">
+                                    <form th:method="POST" th:action="@{'/user/' + ${user.getUsername()} + '/make-admin'}"
+                                          th:object="${user}">
+                                        <input type="hidden" th:field="*{id}"/>
+                                        <input type="hidden" th:field="*{username}"/>
+
+                                        <button type="submit" class="btn custom-button-purple">Make Admin</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div th:if="${#authorization.expression('hasRole(''SUPER_ADMIN'')')}">
+                            <div th:if="${isAdmin}">
+                                <div th:if="${#authentication.getPrincipal().getUsername() != user.username}">
+                                    <div class="position-absolute bottom-0 start-0">
+                                        <form th:method="POST" th:action="@{'/user/' + ${user.getUsername()} + '/delete-admin'}"
+                                              th:object="${user}">
+                                            <input type="hidden" th:field="*{id}"/>
+                                            <input type="hidden" th:field="*{username}"/>
+
+                                            <button type="submit" class="btn btn-outline-danger">Declain Admin</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div th:if="${#authentication.getPrincipal().getUsername() == user.username}">
+                            <div th:if="${#authorization.expression('hasRole(''ADMIN'')') || #authorization.expression('hasRole(''SUPER_ADMIN'')')}">
+                                <div class="position-absolute bottom-0 end-0" style="margin-right: 67px">
+                                    <a th:href="@{'/admin-panel'}"><button type="button" class="btn btn-outline-warning">Admin Panel</button></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div th:if="${#authentication.getPrincipal().getUsername() == user.username}">
+                            <div class="position-absolute bottom-0 end-0">
+                                <a th:href="@{'/user/' + ${user.username} + '/edit'}"><button type="button" class="btn btn-outline-warning">Edit</button></a>
+                            </div>
+                        </div>
+
+
+                        <div th:if="${#authorization.expression('hasRole(''ADMIN'')') || #authorization.expression('hasRole(''SUPER_ADMIN'')')}">
+                            <div th:if="${!isAdminOrSuperAdmin}">
+                                <div th:if="${user.active}">
+                                    <div class="position-absolute bottom-0 end-0">
+                                        <form th:method="POST" th:action="@{'/user/' + ${user.getUsername()} + '/ban'}"
+                                              th:object="${user}">
+                                            <input type="hidden" th:field="*{id}"/>
+                                            <input type="hidden" th:field="*{username}"/>
+
+                                            <button type="submit" class="btn btn-outline-danger">Ban</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div th:unless="${user.active}">
+                                    <div class="position-absolute bottom-0 end-0">
+                                        <form th:method="POST" th:action="@{'/user/' + ${user.getUsername()} + '/unban'}"
+                                              th:object="${user}">
+                                            <input type="hidden" th:field="*{id}"/>
+                                            <input type="hidden" th:field="*{username}"/>
+
+                                            <button type="submit" class="btn btn-outline-info">Unban</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</html>
