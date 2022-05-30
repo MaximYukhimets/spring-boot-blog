@@ -29,8 +29,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJdbcTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @ContextConfiguration(classes = {UserDaoImp.class, RoleDaoImp.class})
-@Sql(scripts = {"classpath:scripts/tables/users_schema.sql",
-        "classpath:scripts/tables/roles_schema.sql"})
+@Sql(scripts = {"classpath:/db/migration/tables/V20220429230353__Create_users_table.sql",
+        "classpath:/db/migration/tables/V20220430145105__Create_roles_table.sql",
+        "classpath:/db/migration/tables/V20220430153829__Create_users_roles_table.sql"})
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class RoleDaoTest {

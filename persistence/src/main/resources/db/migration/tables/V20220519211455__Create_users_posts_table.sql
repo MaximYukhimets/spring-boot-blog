@@ -1,4 +1,4 @@
-create table users_posts (
+create table if not exists users_posts (
     user_id bigint not null,
     post_id bigint not null,
     primary key (user_id, post_id),

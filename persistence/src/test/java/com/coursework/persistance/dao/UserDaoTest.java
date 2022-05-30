@@ -25,12 +25,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 
-
 @RunWith(SpringRunner.class)
 @DataJdbcTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @ContextConfiguration(classes = {UserDaoImp.class})
-@Sql(scripts = {"classpath:scripts/tables/users_schema.sql"})
+@Sql(scripts = {"classpath:/db/migration/tables/V20220429230353__Create_users_table.sql"})
 
 public class UserDaoTest {
 

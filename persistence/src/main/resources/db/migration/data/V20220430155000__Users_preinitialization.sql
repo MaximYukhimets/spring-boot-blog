@@ -4,13 +4,13 @@ insert into roles(role) values ('USER'), ('ADMIN'), ('SUPER_ADMIN');
 -- Set users
 -- password: pass
 insert into users(username, first_name, second_name, password, email, registration_date, active) values
-    ('super_admin',  'Hunter', 'Thompson', '$2a$10$UZ3meAZyru/14gzgZdjB5OCvJPSk4Bsc3ZHQgs34R1RY9lAAxXyYi', 'mail@1234.com', '2022/04/30 23:04:55', 'yes');
+    ('super_admin',  'Hunter', 'Thompson', '$2a$10$UZ3meAZyru/14gzgZdjB5OCvJPSk4Bsc3ZHQgs34R1RY9lAAxXyYi', 'mail@1234.com', '2022-04-30 23:04:55', 'yes');
 -- password: pass
 insert into users(username, first_name, second_name, password, email, registration_date, active) values
-    ('admin',  'Oldos', 'Huxley', '$2a$10$UZ3meAZyru/14gzgZdjB5OCvJPSk4Bsc3ZHQgs34R1RY9lAAxXyYi', 'mail@123.com', '2022/04/30 23:04:55', 'yes');
+    ('admin',  'Oldos', 'Huxley', '$2a$10$UZ3meAZyru/14gzgZdjB5OCvJPSk4Bsc3ZHQgs34R1RY9lAAxXyYi', 'mail@123.com', '2022-04-30 23:04:55', 'yes');
 -- password: pass
 insert into users(username, first_name, second_name, password, email, registration_date, active) values
-    ('user',  'Chris', 'Chan', '$2a$10$UZ3meAZyru/14gzgZdjB5OCvJPSk4Bsc3ZHQgs34R1RY9lAAxXyYi', 'mail@12345.com', '2022/04/30 23:04:55', 'yes');
+    ('user',  'Chris', 'Chan', '$2a$10$UZ3meAZyru/14gzgZdjB5OCvJPSk4Bsc3ZHQgs34R1RY9lAAxXyYi', 'mail@12345.com', '2022-04-30 23:04:55', 'yes');
 
 -- Assign roles to users
 insert into users_roles(user_id, role_id) values (1, 1), (1, 2), (1, 3);

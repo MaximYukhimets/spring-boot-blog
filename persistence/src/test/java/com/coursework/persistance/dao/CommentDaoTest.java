@@ -35,9 +35,9 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 @DataJdbcTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @ContextConfiguration(classes = {PostDaoImp.class, UserDaoImp.class, CommentDaoImp.class})
-@Sql(scripts = {"classpath:scripts/tables/users_schema.sql",
-                "classpath:scripts/tables/posts_schema.sql",
-                "classpath:scripts/tables/comments_schema.sql"})
+@Sql(scripts = {"classpath:/db/migration/tables/V20220429230353__Create_users_table.sql",
+                "classpath:/db/migration/tables/V20220429230658__Create_posts_table.sql",
+                "classpath:/db/migration/tables/V20220429230738__Create_comments_table.sql"})
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class CommentDaoTest {
