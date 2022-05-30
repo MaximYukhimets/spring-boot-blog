@@ -29,14 +29,26 @@ subprojects {
 		mavenCentral()
 	}
 
-//	jar {
-//		enabled = true
+//	bootJar {
+//		enabled = false
 //	}
+
+	jar {
+		enabled = true
+	}
 }
 
 allprojects {
+//	apply plugin: 'java'
+//	apply plugin: 'java-library'
 	apply plugin: 'checkstyle'
+	apply plugin: 'application'
+
+	application {
+		mainClass = 'com.coursework.web.BlogApplication'
+	}
 }
+
 
 checkstyle {
 	toolVersion = '8.29'
