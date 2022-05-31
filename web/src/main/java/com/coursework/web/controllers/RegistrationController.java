@@ -2,9 +2,11 @@ package com.coursework.web.controllers;
 
 import com.coursework.domain.dto.UserDto;
 import com.coursework.persistence.services.UserService;
+import com.coursework.web.security.AuthenticationUser;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,14 +30,14 @@ public class RegistrationController {
     }
 
     @GetMapping("/registration")
-    public String registration(Principal principal, Model model) {
+    public String registration(@AuthenticationPrincipal AuthenticationUser authenticationUser, Model model) {
 
-        if (principal != null) {
+        if (authenticationUser != null) {
             return "redirect:/";
         }
 
         model.addAttribute("user", new UserDto());
-        return "/registration";
+        return "/registrationForm";
     }
 
     @PostMapping("/registration")
@@ -45,7 +47,7 @@ public class RegistrationController {
         userService.userValidation(userDto, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "/registration";
+            return "/registrationForm";
         }
 
         userService.save(userDto);
